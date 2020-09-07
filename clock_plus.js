@@ -121,7 +121,7 @@ Module.register("clock_plus",{
 			dateWrapper.innerHTML = now.format(this.config.dateFormat);
 		}
 		if (this.config.showWeek) {
-			weekWrapper.innerHTML = this.translate("WEEK", {weekNumber: now.format("W, ")}) + this.translate("DAY", {dayNumber: now.format("DDD,")}) + config.timezone;
+			weekWrapper.innerHTML = this.translate("WEEK", {weekNumber: now.format("W, ")}) + this.translate("DAY", {dayNumber: now.format("DDD, z ")}) + config.location + ", " + config.language.toUpperCase();
 		}
 		timeWrapper.innerHTML = timeString;
 		secondsWrapper.innerHTML = now.format(":ss");
