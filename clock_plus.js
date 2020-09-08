@@ -31,7 +31,7 @@ Module.register("clock_plus",{
 	},
 
 	getStyles: function () {
-		return ["clock_styles.css", "weather-icons.css"];
+		return ["clock_plus.css", "weather-icons.css"];
 	},
 
 	getTranslations: function() {
