@@ -77,7 +77,7 @@ Module.register("clock_plus",{
 			if (self.config.displaySeconds) {
 				self.second = moment().second();
 				if (self.second !== 0) {
-//					self.sendNotification("CLOCK_SECOND", self.second);
+					self.sendNotification("CLOCK_SECOND", self.second);
 					setTimeout(notificationTimer, delayCalculator(0));
 					return;
 				}
