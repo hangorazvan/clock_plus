@@ -1,4 +1,6 @@
-# Module: Clock_plus
+# Clock_plus
+
+https://github.com/hangorazvan/clock_plus
 
 Modified MagicMirror2 clock module with days of the year, new sun and moon icons and working svg original clock faces
 
