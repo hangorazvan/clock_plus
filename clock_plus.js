@@ -34,19 +34,8 @@ Module.register("clock_plus",{
 		lon: -0.1257
 	},
 
-	getScripts: function() {
+	getScripts: function () {
 		return ["moment.js", "moment-timezone.js", "suncalc.js"];
-	},
-
-	getStyles: function () {
-		return ["clock_plus.css", "weather-icons.css"];
-	},
-
-	getTranslations: function() {
-		return {
-			en: "en.json",
-			ro: "ro.json",
-		};
 	},
 
 	// Define start sequence.
