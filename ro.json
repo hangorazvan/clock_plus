@@ -1,6 +1,8 @@
 {
 	"WEEK": "Săptămâna {weekNumber}",
 	"DAY": "Ziua {dayNumber}",
+	"Sunrise": "Răsărit",
+	"Sunset": "Apus",
 	"Full Moon": "Plină",
 	"New Moon": "Nouă"
 }
