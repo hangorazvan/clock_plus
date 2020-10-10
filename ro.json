@@ -1,4 +1,6 @@
 {
 	"WEEK": "Săptămâna {weekNumber}",
 	"DAY": "Ziua {dayNumber}",
+	"Full Moon": "Plină",
+	"New Moon": "Nouă"
 }
