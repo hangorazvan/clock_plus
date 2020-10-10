@@ -113,8 +113,8 @@ Module.register("clock_plus",{
 		dateWrapper.className = "date normal xmedium";
 		timeWrapper.className = "time bright xlarge light";
 		secondsWrapper.className = "seconds dimmed";
-		sunWrapper.className = "sun dimmed ssmall";
-		moonWrapper.className = "moon dimmed ssmall";
+		sunWrapper.className = "sun dimmed xmedium";
+		moonWrapper.className = "moon dimmed xmedium";
 		weekWrapper.className = "week dimmed ssmall";
 
 		// Set content of wrappers.
@@ -143,7 +143,7 @@ Module.register("clock_plus",{
 			dateWrapper.innerHTML = now.format(this.config.dateFormat);
 		}
 		if (this.config.showWeek) {
-			weekWrapper.innerHTML = this.translate("WEEK", { weekNumber: now.week() }) + ", " + this.translate("DAY", { dayNumber: now.dayOfYear() }) + ", " + now.format("z") + " " + config.location + ", " + (config.language).toUpperCase();
+			weekWrapper.innerHTML = this.translate("WEEK", { weekNumber: now.week() }) + ", " + this.translate("DAY", { dayNumber: now.dayOfYear() }) + ", " + now.format("z") + ", " + config.location + ", " + (config.language).toUpperCase();
 		}
 		timeWrapper.innerHTML = timeString;
 		secondsWrapper.innerHTML = now.format(":ss");
@@ -188,7 +188,6 @@ Module.register("clock_plus",{
 			}
 			var untilNextEvent = moment.duration(moment(nextEvent).diff(now));
 			var untilNextEventString = untilNextEvent.hours() + "h " + untilNextEvent.minutes() + "m";
-			sunWrapper.innerHTML =
 			sunWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\"><i class=\"wi wi-day-sunny\"></i> " + untilNextEventString + "</span>" +
 				"<span><i class=\"wi wi-sunrise\"></i> " + formatTime(this.config, sunTimes.sunrise) + "</span>" +
 				"<span><i class=\"wi wi-sunset\"></i> " + formatTime(this.config, sunTimes.sunset) + "</span>";
@@ -238,7 +237,7 @@ Module.register("clock_plus",{
 
 				// The following line solves issue: https://github.com/MichMich/MagicMirror/issues/611
 				// clockCircle.style.border = "1px solid black";
-				clockCircle.style.border = "rgba(0, 0, 0, 0)"; //Updated fix for Issue 611 where non-black backgrounds are used
+				clockCircle.style.border = "rgba(0, 0, 0, 0.1)"; //Updated fix for Issue 611 where non-black backgrounds are used
 			} else if (this.config.analogFace !== "none") {
 				clockCircle.style.border = "0";
 			}
@@ -305,13 +304,11 @@ Module.register("clock_plus",{
 			var placement = this.config.analogPlacement;
 
 			var analogWrapper = document.createElement("div");
-//			analogWrapper.id = "analog";
 			analogWrapper.className = "analog";
 			analogWrapper.style.cssFloat = "none";
 			analogWrapper.appendChild(clockCircle);
 
 			var digitalWrapper = document.createElement("div");
-//			digitalWrapper.id = "digital";
 			digitalWrapper.className = "digital";
 			digitalWrapper.style.cssFloat = "none";
 			digitalWrapper.appendChild(dateWrapper);
