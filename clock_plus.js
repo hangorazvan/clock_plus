@@ -37,6 +37,10 @@ Module.register("clock_plus",{
 	getScripts: function () {
 		return ["moment.js", "moment-timezone.js", "suncalc.js"];
 	},
+	
+	getStyles: function () {
+		return ["clock_plus.css"];
+	},
 
 	// Define start sequence.
 	start: function () {
@@ -187,7 +191,10 @@ Module.register("clock_plus",{
 				nextEvent = tomorrowSunTimes.sunrise;
 			}
 			var untilNextEvent = moment.duration(moment(nextEvent).diff(now));
-			var untilNextEventString = untilNextEvent.hours() + "h " + untilNextEvent.minutes() + "m";
+			var untilNextEventString = untilNextEvent.hours() + ":" + untilNextEvent.minutes();
+			if (untilNextEvent.hours() == 0) {untilNextEventString = untilNextEvent.minutes() + "min";}
+			if (untilNextEvent.hours() == 0 && untilNextEvent.minutes() == 0 && now.hours() > 16) {untilNextEventString = this.translate("Sunset");}
+			if (untilNextEvent.hours() == 0 && untilNextEvent.minutes() == 0 && now.hours() < 8) {untilNextEventString = this.translate("Sunrise");}
 			sunWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\"><i class=\"wi wi-day-sunny\"></i> " + untilNextEventString + "</span>" +
 				"<span><i class=\"wi wi-sunrise\"></i> " + formatTime(this.config, sunTimes.sunrise) + "</span>" +
 				"<span><i class=\"wi wi-sunset\"></i> " + formatTime(this.config, sunTimes.sunset) + "</span>";
@@ -205,9 +212,11 @@ Module.register("clock_plus",{
 			}
 			var isVisible = now.isBetween(moonRise, moonSet) || moonTimes.alwaysUp === true;
 			var illuminatedFractionString = Math.round(moonIllumination.fraction * 100) + "%";
+			if (illuminatedFractionString == 100) {illuminatedFractionString = this.translate("Full Moon")}
+			if (illuminatedFractionString == 0) {illuminatedFractionString = this.translate("New Moon")}
 			moonWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\">&nbsp;<i class=\"wi wi-night-clear\"></i>&nbsp; " + illuminatedFractionString + "</span>" +
-				"<span>&nbsp;<i class=\"wi wi-moonrise\"></i>&nbsp; " + (moonRise ? formatTime(this.config, moonRise) : this.translate("YESTERDAY")) + "</span>"+
-				"<span>&nbsp;<i class=\"wi wi-moonset\"></i>&nbsp; " + (moonSet ? formatTime(this.config, moonSet) : this.translate("TOMORROW")) + "</span>";
+				"<span>&nbsp;<i class=\"wi wi-moonrise\"></i>&nbsp; " + (moonRise ? formatTime(this.config, moonRise) : this.translate("TOMORROW")) + "</span>"+
+				"<span>&nbsp;<i class=\"wi wi-moonset\"></i>&nbsp; " + (moonSet ? formatTime(this.config, moonSet) : this.translate("YESTERDAY")) + "</span>";
 		}
 
 		/****************************************************************
