@@ -1,6 +1,8 @@
 {
 	"WEEK": "Week {weekNumber}",
 	"DAY": "Day {dayNumber}",
+	"Sunrise": "Sunrise",
+	"Sunset": "Sunset",
 	"Full Moon": "Full",
 	"New Moon": "New"
 }
