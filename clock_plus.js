@@ -39,7 +39,7 @@ Module.register("clock_plus",{
 	},
 	
 	getStyles: function () {
-		return ["clock_plus.css"];
+		return ["clock_plus.css", "weather-icons.css"];
 	},
 
 	// Define start sequence.
