@@ -1,21 +1,39 @@
-/* global SunCalc */
-
 /* Magic Mirror
- * Module: Clock
  *
- * By Michael Teeuw https://michaelteeuw.nl
- * MIT Licensed.
+ * Redesigned by Răzvan Cristea
+ * for iPad 3 & HD display
+ *
+ * https://github.com/hangorazvan
+ * Creative Commons BY-NC-SA 4.0, Romania.
  */
-Module.register("clock", {
-	// Module config defaults.
+Module.register("clock_plus",{
+
 	defaults: {
-	    timeFormat: config.timeFormat,
-	    timezone: config.timezone,
-        lat: config.latitude,
-		lon: config.longitude,
-		showPeriod: config.period,
-		showPeriodUpper: config.period,
+		displayType: "both", // options: digital, analog, both
+
+		timeFormat: config.timeFormat,
+		displaySeconds: true,
+		showPeriod: true,
+		showPeriodUpper: false,
+		clockBold: false,
+		showDate: true,
+		showWeek: true,
+		dateFormat: "dddd, D MMMM Y",
+
+		/* specific to the analog clock */
+		analogSize: "300px",
+		analogFace: "none", // options: 'none', 'simple', 'face-###' (where ### is 001 to 012 inclusive)
+		analogPlacement: "bottom", // options: 'top', 'bottom', 'left', 'right'
+		analogShowDate: "top", // options: false, 'top', or 'bottom'
+		secondsColor: "coral",
+		timezone: "Europe/London",
+
+		showSunTimes: true,
+		showMoonTimes: true,
+		lat: 51.5085,
+		lon: -0.1257
 	},
+
 	// Define required scripts.
 	getScripts: function () {
 		return ["moment.js", "moment-timezone.js", "suncalc.js"];
