@@ -193,6 +193,7 @@ Module.register("clock_plus",{
 			var untilNextEvent = moment.duration(moment(nextEvent).diff(now));
 			var untilNextEventString = untilNextEvent.hours() + ":" + untilNextEvent.minutes();
 			if (untilNextEvent.hours() == 0) {untilNextEventString = untilNextEvent.minutes() + "min";}
+			if (untilNextEvent.minutes() < 10) {untilNextEventString = "0" + untilNextEvent.minutes() + "min";}
 			if (untilNextEvent.hours() == 0 && untilNextEvent.minutes() == 0 && now.hours() > 16) {untilNextEventString = this.translate("Sunset");}
 			if (untilNextEvent.hours() == 0 && untilNextEvent.minutes() == 0 && now.hours() < 8) {untilNextEventString = this.translate("Sunrise");}
 			sunWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\"><i class=\"wi wi-day-sunny\"></i> " + untilNextEventString + "</span>" +
