@@ -72,7 +72,7 @@
 
 .clock_plus .sun,
 .clock_plus .moon {
-  display: flex;
+  display: flex: 1 0 120px;
 }
 
 .clock_plus .sun > *,
