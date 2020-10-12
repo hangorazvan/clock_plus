@@ -147,7 +147,7 @@ Module.register("clock_plus",{
 			dateWrapper.innerHTML = now.format(this.config.dateFormat);
 		}
 		if (this.config.showWeek) {
-			weekWrapper.innerHTML = this.translate("WEEK", { weekNumber: now.week() }) + ", " + this.translate("DAY", { dayNumber: now.dayOfYear() }) + ", " + now.format("z") + ", " + config.location + ", " + (config.language).toUpperCase();
+			weekWrapper.innerHTML = this.translate("WEEK", { weekNumber: now.week() }) + ", " + this.translate("DAY", { dayNumber: now.dayOfYear() }) + ", " + this.translate(config.location) + ", " + this.translate(config.country);
 		}
 		timeWrapper.innerHTML = timeString;
 		secondsWrapper.innerHTML = now.format(":ss");
@@ -191,12 +191,12 @@ Module.register("clock_plus",{
 				nextEvent = tomorrowSunTimes.sunrise;
 			}
 			var untilNextEvent = moment.duration(moment(nextEvent).diff(now));
-			var untilNextEventString = untilNextEvent.hours() + ":" + untilNextEvent.minutes();
+			var untilNextEventString = untilNextEvent.hours() + ":" + untilNextEvent.minutes() + "m";
 
-			if (untilNextEvent.minutes() === 0) {untilNextEventString = untilNextEvent.hours() + "h";}
 			if (untilNextEvent.hours() === 0) {untilNextEventString = untilNextEvent.minutes() + "min";}
-			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() > 16) {untilNextEventString = this.translate("Sunset");}
-			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() < 8) {untilNextEventString = this.translate("Sunrise");}
+			if (untilNextEvent.minutes() < 10) {untilNextEventString = untilNextEvent.hours() + ":0" + untilNextEvent.minutes() + "m";}
+			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() > 12) {untilNextEventString = this.translate("Sunset");}
+			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() < 12) {untilNextEventString = this.translate("Sunrise");}
 
 			sunWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\"><i class=\"wi wi-day-sunny\"></i> " + untilNextEventString + "</span>" +
 				"<span><i class=\"wi wi-sunrise\"></i> " + formatTime(this.config, sunTimes.sunrise) + "</span>" +
