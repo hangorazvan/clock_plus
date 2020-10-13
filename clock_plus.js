@@ -191,12 +191,13 @@ Module.register("clock_plus",{
 				nextEvent = tomorrowSunTimes.sunrise;
 			}
 			var untilNextEvent = moment.duration(moment(nextEvent).diff(now));
-			var untilNextEventString = untilNextEvent.hours() + ":" + untilNextEvent.minutes() + "m";
+			var untilNextEventString = untilNextEvent.hours() + "h " + untilNextEvent.minutes() + "'";
 
 			if (untilNextEvent.hours() === 0) {untilNextEventString = untilNextEvent.minutes() + "min";}
-			if (untilNextEvent.minutes() < 10) {untilNextEventString = untilNextEvent.hours() + ":0" + untilNextEvent.minutes() + "m";}
-			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() > 12) {untilNextEventString = this.translate("Sunset");}
-			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() < 12) {untilNextEventString = this.translate("Sunrise");}
+			else if (untilNextEvent.minutes() < 10) {untilNextEventString = untilNextEvent.hours() + "h 0" + untilNextEvent.minutes() + "'";}
+			else if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() < 10) {untilNextEventString = "0" + untilNextEvent.minutes() + "min";}
+			else if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() > 12) {untilNextEventString = this.translate("Sunset");}
+			else if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() < 12) {untilNextEventString = this.translate("Sunrise");}
 
 			sunWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\"><i class=\"wi wi-day-sunny\"></i> " + untilNextEventString + "</span>" +
 				"<span><i class=\"wi wi-sunrise\"></i> " + formatTime(this.config, sunTimes.sunrise) + "</span>" +
@@ -222,7 +223,7 @@ Module.register("clock_plus",{
 			var isVisible = now.isBetween(moonRise, moonSet) || moonTimes.alwaysUp === true;
 			var illuminatedFractionString = Math.round(moonIllumination.fraction * 100) + "%";
 			if (illuminatedFractionString === 100) {illuminatedFractionString = this.translate("Full Moon")}
-			if (illuminatedFractionString === 0) {illuminatzedFractionString = this.translate("New Moon")}
+			else if (illuminatedFractionString === 0) {illuminatzedFractionString = this.translate("New Moon")}
 
 			moonWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\">&nbsp;<i class=\"wi wi-night-clear\"></i>&nbsp; " + illuminatedFractionString + "</span>" +
 				"<span>&nbsp;<i class=\"wi wi-moonrise\"></i>&nbsp; " + (moonRise ? formatTime(this.config, moonRise) : this.translate("TOMORROW")) + "</span>"+
