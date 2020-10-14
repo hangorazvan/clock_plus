@@ -193,9 +193,9 @@ Module.register("clock_plus",{
 			var untilNextEvent = moment.duration(moment(nextEvent).diff(now));
 			var untilNextEventString = untilNextEvent.hours() + "h " + untilNextEvent.minutes() + "'";
 
-			if (untilNextEvent.hours() === 0) {untilNextEventString = untilNextEvent.minutes() + "min";}
-			if (untilNextEvent.minutes() < 10) {untilNextEventString = untilNextEvent.hours() + "h 0" + untilNextEvent.minutes() + "'";}
-			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() < 10) {untilNextEventString = "0" + untilNextEvent.minutes() + "min";}
+			if (untilNextEvent.hours() === 0) {untilNextEventString = untilNextEvent.minutes() + " min";}
+//			if (untilNextEvent.minutes() < 10) {untilNextEventString = untilNextEvent.hours() + "h 0" + untilNextEvent.minutes() + "'";}
+//			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() < 10) {untilNextEventString = "0" + untilNextEvent.minutes() + "min";}
 			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() > 12) {untilNextEventString = this.translate("Sunset");}
 			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() < 12) {untilNextEventString = this.translate("Sunrise");}
 
