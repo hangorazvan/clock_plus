@@ -34,12 +34,19 @@ Module.register("clock_plus",{
 		lon: -0.1257
 	},
 
-	getScripts: function () {
+	getScripts: function() {
 		return ["moment.js", "moment-timezone.js", "suncalc.js"];
 	},
-	
+
 	getStyles: function () {
 		return ["clock_plus.css", "weather-icons.css"];
+	},
+
+	getTranslations: function() {
+		return {
+			en: "en.json",
+			ro: "ro.json",
+		};
 	},
 
 	// Define start sequence.
@@ -147,7 +154,8 @@ Module.register("clock_plus",{
 			dateWrapper.innerHTML = now.format(this.config.dateFormat);
 		}
 		if (this.config.showWeek) {
-			weekWrapper.innerHTML = this.translate("WEEK", { weekNumber: now.week() }) + ", " + this.translate("DAY", { dayNumber: now.dayOfYear() }) + ", " + this.translate(config.location) + ", " + this.translate(config.country);
+			weekWrapper.innerHTML = this.translate("WEEK", { weekNumber: now.week() }) + ", " + this.translate("DAY", { dayNumber: now.dayOfYear() }) 
+			+ ", " + now.format("z") + " " + config.language.toUpperCase() + ", " + config.location;
 		}
 		timeWrapper.innerHTML = timeString;
 		secondsWrapper.innerHTML = now.format(":ss");
@@ -194,12 +202,10 @@ Module.register("clock_plus",{
 			var untilNextEventString = untilNextEvent.hours() + "h " + untilNextEvent.minutes() + "'";
 
 			if (untilNextEvent.hours() === 0) {untilNextEventString = untilNextEvent.minutes() + " min";}
-//			if (untilNextEvent.minutes() < 10) {untilNextEventString = untilNextEvent.hours() + "h 0" + untilNextEvent.minutes() + "'";}
-//			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() < 10) {untilNextEventString = "0" + untilNextEvent.minutes() + "min";}
 			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() > 12) {untilNextEventString = this.translate("Sunset");}
 			if (untilNextEvent.hours() === 0 && untilNextEvent.minutes() === 0 && now.hours() < 12) {untilNextEventString = this.translate("Sunrise");}
 
-			sunWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\"><i class=\"wi wi-day-sunny\"></i> " + untilNextEventString + "</span>" +
+			sunWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "dimmed") + "\"><i class=\"wi wi-day-sunny\"></i> " + untilNextEventString + "</span>" +
 				"<span><i class=\"wi wi-sunrise\"></i> " + formatTime(this.config, sunTimes.sunrise) + "</span>" +
 				"<span><i class=\"wi wi-sunset\"></i> " + formatTime(this.config, sunTimes.sunset) + "</span>";
 		}
@@ -207,13 +213,13 @@ Module.register("clock_plus",{
 			var moonIllumination = SunCalc.getMoonIllumination(now.toDate());
 			var moonTimes = SunCalc.getMoonTimes(now, this.config.lat, this.config.lon);
 //			var moonRise = moonTimes.rise;
+//			var moonSet;
 			if (moment(moonTimes.rise).isBefore(moonTimes.set)) {
 				moonRise = moonTimes.rise;
 			} else {
 				var nextMoonTimes = SunCalc.getMoonTimes(now.clone().add(1, "day"), this.config.lat, this.config.lon);
 				moonRise = nextMoonTimes.rise;
 			}
-//			var moonSet;
 			if (moment(moonTimes.set).isAfter(moonTimes.rise)) {
 				moonSet = moonTimes.set;
 			} else {
@@ -222,11 +228,10 @@ Module.register("clock_plus",{
 			}
 			var isVisible = now.isBetween(moonRise, moonSet) || moonTimes.alwaysUp === true;
 			var illuminatedFractionString = Math.round(moonIllumination.fraction * 100) + "%";
-			if (illuminatedFractionString === 100) {illuminatedFractionString = this.translate("Full Moon")}
-			if (illuminatedFractionString === 0) {illuminatzedFractionString = this.translate("New Moon")}
-
-			moonWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "") + "\">&nbsp;<i class=\"wi wi-night-clear\"></i>&nbsp; " + illuminatedFractionString + "</span>" +
-				"<span>&nbsp;<i class=\"wi wi-moonrise\"></i>&nbsp; " + (moonRise ? formatTime(this.config, moonRise) : this.translate("TOMORROW")) + "</span>"+
+			if (Math.round(moonIllumination.fraction * 100) === 100) {illuminatedFractionString = this.translate("Full Moon");}
+			if (Math.round(moonIllumination.fraction * 100) === 0) {illuminatzedFractionString = this.translate("New Moon");}
+			moonWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "dimmed") + "\"> <i class=\"wi wi-night-clear\"></i>&nbsp; " + illuminatedFractionString + "</span>" +
+				"<span>&nbsp;<i class=\"wi wi-moonrise\"></i>&nbsp; " + (moonRise ? formatTime(this.config, moonRise) : this.translate("TOMORROW")) + "</span>" +
 				"<span>&nbsp;<i class=\"wi wi-moonset\"></i>&nbsp; " + (moonSet ? formatTime(this.config, moonSet) : this.translate("TOMORROW")) + "</span>";
 		}
 
