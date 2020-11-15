@@ -229,7 +229,7 @@ Module.register("clock_plus",{
 			var isVisible = now.isBetween(moonRise, moonSet) || moonTimes.alwaysUp === true;
 			var illuminatedFractionString = Math.round(moonIllumination.fraction * 100) + "%";
 			if (Math.round(moonIllumination.fraction * 100) === 100) {illuminatedFractionString = this.translate("Full Moon");}
-			if (Math.round(moonIllumination.fraction * 100) === 0) {illuminatzedFractionString = this.translate("New Moon");}
+			if (Math.round(moonIllumination.fraction * 100) === 0) {illuminatedFractionString = this.translate("New Moon");}
 			moonWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "dimmed") + "\"> <i class=\"wi wi-night-clear\"></i>&nbsp; " + illuminatedFractionString + "</span>" +
 				"<span>&nbsp;<i class=\"wi wi-moonrise\"></i>&nbsp; " + (moonRise ? formatTime(this.config, moonRise) : this.translate("TOMORROW")) + "</span>" +
 				"<span>&nbsp;<i class=\"wi wi-moonset\"></i>&nbsp; " + (moonSet ? formatTime(this.config, moonSet) : this.translate("TOMORROW")) + "</span>";
