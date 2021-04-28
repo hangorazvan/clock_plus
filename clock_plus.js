@@ -7,48 +7,47 @@
  * Creative Commons BY-NC-SA 4.0, Romania.
  */
 Module.register("clock_plus",{
-
+	// Module config defaults.
 	defaults: {
-		displayType: "both", // options: digital, analog, both
+		displayType: "digital", // options: digital, analog, both
 
 		timeFormat: config.timeFormat,
 		displaySeconds: true,
-		showPeriod: true,
-		showPeriodUpper: false,
+		showPeriod: config.period,
+		showPeriodUpper: config.period,
 		clockBold: false,
 		showDate: true,
-		showWeek: true,
-		dateFormat: "dddd, D MMMM Y",
+		showWeek: false,
+		dateFormat: "dddd, LL",
 
 		/* specific to the analog clock */
 		analogSize: "300px",
-		analogFace: "none", // options: 'none', 'simple', 'face-###' (where ### is 001 to 012 inclusive)
+		analogFace: "simple", // options: 'none', 'simple', 'face-###' (where ### is 001 to 012 inclusive)
 		analogPlacement: "bottom", // options: 'top', 'bottom', 'left', 'right'
 		analogShowDate: "top", // options: false, 'top', or 'bottom'
-		secondsColor: "coral",
-		timezone: "Europe/London",
+		secondsColor: "#888888",
+		timezone: config.timezone,
 
-		showSunTimes: true,
-		showMoonTimes: true,
-		lat: 51.5085,
-		lon: -0.1257
+		showSunTimes: false,
+		showMoonTimes: false,
+        lat: config.latitude,
+		lon: config.longitude,
 	},
-
-	getScripts: function() {
+	// Define required scripts.
+	getScripts: function () {
 		return ["moment.js", "moment-timezone.js", "suncalc.js"];
 	},
-
+	// Define styles.
 	getStyles: function () {
 		return ["clock_plus.css", "weather-icons.css"];
 	},
-
-	getTranslations: function() {
+	// Define translation.
+	getTranslations: function () {
 		return {
 			en: "en.json",
-			ro: "ro.json",
+			ro: "ro.json"
 		};
 	},
-
 	// Define start sequence.
 	start: function () {
 		Log.info("Starting module: " + this.name);
@@ -121,12 +120,12 @@ Module.register("clock_plus",{
 		var moonWrapper = document.createElement("div");
 		var weekWrapper = document.createElement("div");
 		// Style Wrappers
-		dateWrapper.className = "date normal xmedium";
+		dateWrapper.className = "date normal medium";
 		timeWrapper.className = "time bright xlarge light";
 		secondsWrapper.className = "seconds dimmed";
-		sunWrapper.className = "sun dimmed xmedium";
-		moonWrapper.className = "moon dimmed xmedium";
-		weekWrapper.className = "week dimmed ssmall";
+		sunWrapper.className = "sun dimmed medium";
+		moonWrapper.className = "moon dimmed medium";
+		weekWrapper.className = "week dimmed midget";
 
 		// Set content of wrappers.
 		// The moment().format("h") method has a bug on the Raspberry Pi.
@@ -230,7 +229,7 @@ Module.register("clock_plus",{
 			var illuminatedFractionString = Math.round(moonIllumination.fraction * 100) + "%";
 			if (Math.round(moonIllumination.fraction * 100) === 100) {illuminatedFractionString = this.translate("Full Moon");}
 			if (Math.round(moonIllumination.fraction * 100) === 0) {illuminatedFractionString = this.translate("New Moon");}
-			moonWrapper.innerHTML = "<span class=\"" + (isVisible ? "bright" : "dimmed") + "\"> <i class=\"wi wi-night-clear\"></i>&nbsp; " + illuminatedFractionString + "</span>" +
+			moonWrapper.innerHTML = "<span class=brightness \"" + (isVisible ? "bright" : "dimmed") + "\"> <i class=\"wi wi-night-clear\"></i>&nbsp; " + illuminatedFractionString + "</span>" +
 				"<span>&nbsp;<i class=\"wi wi-moonrise\"></i>&nbsp; " + (moonRise ? formatTime(this.config, moonRise) : this.translate("TOMORROW")) + "</span>" +
 				"<span>&nbsp;<i class=\"wi wi-moonset\"></i>&nbsp; " + (moonSet ? formatTime(this.config, moonSet) : this.translate("TOMORROW")) + "</span>";
 		}
