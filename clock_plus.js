@@ -13,8 +13,8 @@ Module.register("clock_plus",{
 
 		timeFormat: config.timeFormat,
 		displaySeconds: true,
-		showPeriod: config.period,
-		showPeriodUpper: config.period,
+		showPeriod: false,
+		showPeriodUpper: false,
 		clockBold: false,
 		showDate: true,
 		showWeek: false,
@@ -30,8 +30,8 @@ Module.register("clock_plus",{
 
 		showSunTimes: false,
 		showMoonTimes: false,
-        lat: config.latitude,
-		lon: config.longitude,
+        lat: "",
+		lon: "",
 	},
 	// Define required scripts.
 	getScripts: function () {
